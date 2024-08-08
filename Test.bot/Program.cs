@@ -15,7 +15,7 @@ ApplicationService applicationService = new();
 TestService testService = new ();
 
 var botManager = new TelegramBotManager();
-var bot = botManager.Create("7206368648:AAFGLnJA_DQxMPma0UUvF1shIhyM7SF-Gnk");
+var bot = botManager.Create("token");
 botManager.Start(BotFunction);
 void BotFunction(Update update)
 {
