@@ -64,6 +64,7 @@ void UserActions(Update update)
             case Step.SaveAdmin: SaveAdmin(user,message); break;
             case Step.RemoveAdmin: RemoveAdminFromData(user, message); break;
             case Step.GetResult: GetResult(user, message); break;
+            case Step.ShowAdminAction: ChooceSuperAdminAction(user, message); break;
         }
 
     }
@@ -85,7 +86,8 @@ void SaveLanguage(User user, string message)
     {
         user.Language = "English";
     }
-    else { 
+    else 
+    { 
         AskLanguage(user);
         return;
     }
@@ -249,6 +251,7 @@ void ChooseUserMenu(User user, string message)
             {
                 case EnConstants.TakeTestText: GetTest(user); break;
                 case EnConstants.MessageToAdminText: SendMessageToAdmin(user); break;
+                case EnConstants.UpdateUserInfo:UpdateUserInfo(user); break;
                 default: ShowMenu(user); break;
             }
         }
@@ -267,6 +270,11 @@ void ChooseUserMenu(User user, string message)
         ShowMenu(user);
     }
 }
+void UpdateUserInfo(User user)
+{
+    user.UserStep = Step.AskLanguage;
+    userService.UpdateUser();
+}
 void ChooseAdminMenu(User user, string message)
 {
     try
@@ -278,6 +286,7 @@ void ChooseAdminMenu(User user, string message)
                 case EnConstants.TakeTestText: GetTest(user); break;
                 case EnConstants.AddTest: AddTest(user); break;
                 case EnConstants.MessageOfUsers: GetMessages(user); break;
+                case EnConstants.UpdateUserInfo: UpdateUserInfo(user); break;
                 default: ShowMenu(user); break;
             }
         }
@@ -309,11 +318,7 @@ void ChooseSuperAdminMenu(User user, string message)
                 case EnConstants.AddTest: AddTest(user); break;
                 case EnConstants.ShowResultText: ShowResult(user); break;
                 case EnConstants.MessageOfUsers: GetMessages(user); break;
-                case EnConstants.AddAdmin: AddAdmin(user); break;
-                case EnConstants.RemoveAdmin: RemoveAdmin(user); break;
-                case EnConstants.AddChannelLink: AddChannelLink(user); break;
-                case EnConstants.RemoveChannelLinks: RemoveChannel(user); break;
-                case EnConstants.GetAllUsers: GetAllUsers(user); break;
+                case EnConstants.GetSuperAdminAction: GetSuperAdminAction(user); break;
                 default: ShowMenu(user); break;
             }
         }
@@ -331,6 +336,47 @@ void ChooseSuperAdminMenu(User user, string message)
                 case RuConstants.RemoveChannelLinks: RemoveChannel(user); break;
                 case RuConstants.GetAllUsers: GetAllUsers(user); break;
                 default: ShowMenu(user); break;
+            }
+        }
+    }
+    catch (Exception e)
+    {
+        ShowMenu(user);
+    }
+}
+void GetSuperAdminAction(User user)
+{
+    if (user.Role == UserRole.SuperAdmin)
+    {
+        user.UserStep = Step.ShowAdminAction;
+        userService.UpdateUser();
+        ReplyKeyboardMarkup keyboard;
+        if (user.Language == "English")
+        {
+            keyboard = EnStaticService.GetSuperAdminAction();
+            bot.SendTextMessageAsync(user.ChatId, "SuperAdminMenu :", replyMarkup: keyboard);
+        }
+    }
+    else
+    {
+        ShowMenu(user);
+    }
+}
+void ChooceSuperAdminAction(User user, string message)
+{
+    try
+    {
+        if (user.Language == "English")
+        {
+            switch (message)
+            {
+                case EnConstants.AddAdmin: AddAdmin(user); break;
+                case EnConstants.RemoveAdmin: RemoveAdmin(user); break;
+                case EnConstants.AddChannelLink: AddChannelLink(user); break;
+                case EnConstants.RemoveChannelLinks: RemoveChannel(user); break;
+                case EnConstants.GetAllUsers: GetAllUsers(user); break;
+                case EnConstants.UpdateUserInfo: UpdateUserInfo(user); break;
+                default: GetSuperAdminAction(user); break;
             }
         }
     }

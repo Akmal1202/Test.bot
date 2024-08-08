@@ -19,5 +19,6 @@ public enum Step
     SaveChannel,
     DeleteChannel,
     SendAllUsers,
-    GetResult
+    GetResult,
+    ShowAdminAction
 }

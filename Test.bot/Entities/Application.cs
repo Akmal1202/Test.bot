@@ -1,5 +1,4 @@
-﻿
-namespace Test.bot.Entities;
+﻿namespace Test.bot.Entities;
 public class Application
 {
     public string Message { get; set; }

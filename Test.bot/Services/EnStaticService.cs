@@ -105,6 +105,7 @@ public static class EnStaticService
         var rows1 = new List<KeyboardButton>()
         {
             new (EnConstants.TakeTestText),
+            new(EnConstants.UpdateUserInfo)
         };
 
         var rows2 = new List<KeyboardButton>()
@@ -128,7 +129,8 @@ public static class EnStaticService
 
         var rows2 = new List<KeyboardButton>()
         {
-            new (EnConstants.MessageOfUsers)
+            new (EnConstants.MessageOfUsers),
+            new(EnConstants.UpdateUserInfo)
         };
 
 
@@ -155,8 +157,21 @@ public static class EnStaticService
         };
         var rows3 = new List<KeyboardButton>()
         {
-            new (EnConstants.ShowResultText)
+            new (EnConstants.GetSuperAdminAction),
+            new(EnConstants.UpdateUserInfo)
         };
+
+
+        Buttons.Add(rows1);
+        Buttons.Add(rows2);
+        Buttons.Add(rows3);
+
+
+        return new ReplyKeyboardMarkup(Buttons) { ResizeKeyboard = true };
+    }
+    public static ReplyKeyboardMarkup GetSuperAdminAction()
+    {
+        Buttons = new(); 
         var rows4 = new List<KeyboardButton>()
         {
             new (EnConstants.AddAdmin),
@@ -166,11 +181,7 @@ public static class EnStaticService
         {
             new (EnConstants.AddChannelLink),
             new (EnConstants.RemoveChannelLinks)
-        };
-
-        Buttons.Add(rows1);
-        Buttons.Add(rows2);
-    //    Buttons.Add(rows3);
+        }; 
         Buttons.Add(rows4);
         Buttons.Add(rows5);
 

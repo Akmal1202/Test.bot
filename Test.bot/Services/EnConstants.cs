@@ -19,5 +19,8 @@ public static class EnConstants
     public const string ApplicationPath = "applications.xlsx";
     public const string UserInfoPath = "userInfo.xlsx";
     public const string BackText = "Back 🔙";
+    public const string GetSuperAdminAction = "SuperAdminAction";
+    public const string UpdateUserInfo = "Update info";
     public const long SuperAdmin = 6006612686;
+
 }

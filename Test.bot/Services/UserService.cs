@@ -34,18 +34,15 @@ public class UserService
         }
         return user;
     }
-
     public void UpdateUser()
     {
         WriteToFile();
     }
-
     void WriteToFile()
     {
         var jsonData = JsonConvert.SerializeObject(Users);
         File.WriteAllText(Path, jsonData);
     }
-
     void ReadFromFile()
     {
         if (File.Exists(Path))
@@ -53,5 +50,17 @@ public class UserService
             var jsonData = File.ReadAllText(Path);
             Users = JsonConvert.DeserializeObject<List<User>>(jsonData)!;
         }
+    }
+    public User UpdateUserInfo(long chatId, string? username, string language, string grade)
+    {
+        var user = Users.FirstOrDefault(u => u.ChatId == chatId);
+        if (user is not null)
+        { 
+            user.UserName = username;
+            user.Language = language;
+            user.Grade = grade;
+            WriteToFile();
+        }
+        return user;
     }
 }
